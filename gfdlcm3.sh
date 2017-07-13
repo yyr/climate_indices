@@ -1,6 +1,7 @@
 #!/bin/bash
 # Created: Wednesday, July 12 2017
 exp=${1:-historicalNat}
+model=GFDL-CM3
 
 case ${exp} in
     historicalNat )
@@ -18,7 +19,7 @@ cd ${dir}
 
 echo "Started processing ${exp} in ${dir} directory."
 
-if ls -U *${exp}*r180x100* 1> /dev/null 2>&1; then
+if ls -U *${model}*${exp}*r180x100* 1> /dev/null 2>&1; then
     echo Files seems already processed.
     exit
 fi
