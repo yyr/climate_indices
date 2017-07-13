@@ -2,7 +2,7 @@
 # Created: Wednesday, July 12 2017
 exp=${1:-historicalNat}
 model=GFDL-ESM2M
-ens=
+ens=r1i1p1
 
 case ${exp} in
     historicalNat )
