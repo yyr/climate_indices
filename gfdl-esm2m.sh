@@ -1,19 +1,22 @@
 #!/bin/bash
 # Created: Wednesday, July 12 2017
-exp=${1:-historicalNat}
+exp=${1:-historical}
 model=GFDL-ESM2M
 ens=r1i1p1
 
 case ${exp} in
+    historical )
+        dir=hist
+        ;;
     historicalNat )
-        dir=/mota/DATA/cmip5/histNat
+        dir=histNat
         ;;
     historicalMisc )
-        dir=/mota/DATA/cmip5/histMisc
+        dir=histMisc
         ens=r1i1p5
         ;;
     historicalGHG )
-        dir=/mota/DATA/cmip5/histGHG
+        dir=histGHG
         ;;
 esac
 
