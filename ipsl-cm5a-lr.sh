@@ -1,13 +1,47 @@
 #!/bin/bash
 # Created: Thursday, July 13 2017
 
-exp=${1:-historicalNat}
+exp=${1:-historical}
 model=IPSL-CM5A-LR
 ens=r1i1p1
 
 case ${exp} in
+    historical )
+        dir=hist
+
+        cd ${dir}
+        echo "Started processing ${exp} in ${dir} directory."
+
+        cdo -mergetime \
+            tas_day_${model}_${exp}_${ens}_18500101-19491231.nc \
+            tas_day_${model}_${exp}_${ens}_19500101-20051231.nc \
+            tas_day_${model}_${exp}_${ens}_18500101-20051231.nc
+
+        cdo -remapbil,r180x100 -selyear,1900/2005 \
+            tas_day_${model}_${exp}_${ens}_18500101-20051231.nc \
+            tas_day_${model}_${exp}_${ens}_19000101-20051231_r180x100.nc
+
+        cdo -mergetime \
+            tasmin_day_${model}_${exp}_${ens}_18500101-19491231.nc \
+            tasmin_day_${model}_${exp}_${ens}_19500101-20051231.nc \
+            tasmin_day_${model}_${exp}_${ens}_18500101-20051231.nc
+
+        cdo -remapbil,r180x100 -selyear,1900/2005 \
+            tasmin_day_${model}_${exp}_${ens}_18500101-20051231.nc \
+            tasmin_day_${model}_${exp}_${ens}_19000101-20051231_r180x100.nc
+
+        cdo -mergetime \
+            tasmax_day_${model}_${exp}_${ens}_18500101-19491231.nc \
+            tasmax_day_${model}_${exp}_${ens}_19500101-20051231.nc \
+            tasmax_day_${model}_${exp}_${ens}_18500101-20051231.nc
+
+        cdo -remapbil,r180x100 -selyear,1900/2005 \
+            tasmax_day_${model}_${exp}_${ens}_18500101-20051231.nc \
+            tasmax_day_${model}_${exp}_${ens}_19000101-20051231_r180x100.nc
+        ;;
+
     historicalNat )
-        dir=/mota/DATA/cmip5/histNat
+        dir=histNat
 
         cd ${dir}
         echo "Started processing ${exp} in ${dir} directory."
@@ -26,7 +60,7 @@ case ${exp} in
         ;;
 
     historicalMisc )
-        dir=/mota/DATA/cmip5/histMisc
+        dir=histMisc
         ens=r1i1p3
 
         cd ${dir}
@@ -46,7 +80,7 @@ case ${exp} in
         ;;
 
     historicalGHG )
-        dir=/mota/DATA/cmip5/histGHG
+        dir=histGHG
         cd ${dir}
         echo "Started processing ${exp} in ${dir} directory."
         cdo -mergetime \
