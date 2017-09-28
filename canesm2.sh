@@ -1,6 +1,9 @@
 #!/bin/bash
 # Created: Thursday, July 13 2017
 
+THIS_FILE_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+source $THIS_FILE_DIR/fun.bash
+
 # exp=${1:-historical}
 # exmts=(historical)
 exmts=(historical historicalNat historicalMisc historicalGHG)
@@ -30,7 +33,7 @@ for exp in ${exmts[@]}; do
             ;;
     esac
 
-    cd ${dir}
+    cd $THIS_FILE_DIR/${dir}
     echo "Started processing ${exp} in ${dir} directory."
 
     case ${exp} in
