@@ -1,129 +1,89 @@
 #!/bin/bash
 # Created: Thursday, July 13 2017
 
-exp=${1:-historical}
+THIS_FILE_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+source $THIS_FILE_DIR/fun.bash
+
+# exp=${1:-historical}
+# exmts=(historical)
+exmts=(historical historicalNat historicalGHG historicalMisc)
+
+vars=(pr)
+# vars=(pr tas tasmax tasmin)
+
 model=IPSL-CM5A-LR
 ens=r1i1p1
 
-case ${exp} in
-    historical )
-        dir=hist
+for exp in ${exmts[@]}; do
+    for var in "${vars[@]}"
+    do
+        case ${exp} in
+            historical )
+                dir=hist
 
-        cd ${dir}
-        echo "Started processing ${exp} in ${dir} directory."
+                cd $THIS_FILE_DIR/${dir}
+                echo "Started processing ${exp} in ${dir} directory."
 
-        cdo -mergetime \
-            tas_day_${model}_${exp}_${ens}_18500101-19491231.nc \
-            tas_day_${model}_${exp}_${ens}_19500101-20051231.nc \
-            tas_day_${model}_${exp}_${ens}_18500101-20051231.nc
+                cdo -mergetime \
+                    ${var}_day_${model}_${exp}_${ens}_18500101-19491231.nc \
+                    ${var}_day_${model}_${exp}_${ens}_19500101-20051231.nc \
+                    ${var}_day_${model}_${exp}_${ens}_18500101-20051231.nc
 
-        cdo -remapbil,r180x100 -selyear,1900/2005 \
-            tas_day_${model}_${exp}_${ens}_18500101-20051231.nc \
-            tas_day_${model}_${exp}_${ens}_19000101-20051231_r180x100.nc
+                cdo -remapbil,r180x100 -selyear,1900/2005 \
+                    ${var}_day_${model}_${exp}_${ens}_18500101-20051231.nc \
+                    ${var}_day_${model}_${exp}_${ens}_19000101-20051231_r180x100.nc
+                ;;
 
-        cdo -mergetime \
-            tasmin_day_${model}_${exp}_${ens}_18500101-19491231.nc \
-            tasmin_day_${model}_${exp}_${ens}_19500101-20051231.nc \
-            tasmin_day_${model}_${exp}_${ens}_18500101-20051231.nc
+            historicalNat )
+                dir=histNat
 
-        cdo -remapbil,r180x100 -selyear,1900/2005 \
-            tasmin_day_${model}_${exp}_${ens}_18500101-20051231.nc \
-            tasmin_day_${model}_${exp}_${ens}_19000101-20051231_r180x100.nc
+                cd $THIS_FILE_DIR/${dir}
+                echo "Started processing ${exp} in ${dir} directory."
 
-        cdo -mergetime \
-            tasmax_day_${model}_${exp}_${ens}_18500101-19491231.nc \
-            tasmax_day_${model}_${exp}_${ens}_19500101-20051231.nc \
-            tasmax_day_${model}_${exp}_${ens}_18500101-20051231.nc
+                cdo -mergetime \
+                    ${var}_day_${model}_${exp}_${ens}_18500101-18991231.nc  \
+                    ${var}_day_${model}_${exp}_${ens}_19000101-19491231.nc \
+                    ${var}_day_${model}_${exp}_${ens}_19500101-19991231.nc \
+                    ${var}_day_${model}_${exp}_${ens}_20000101-20121231.nc \
+                    ${var}_day_${model}_${exp}_${ens}_18500101-20121231.nc
 
-        cdo -remapbil,r180x100 -selyear,1900/2005 \
-            tasmax_day_${model}_${exp}_${ens}_18500101-20051231.nc \
-            tasmax_day_${model}_${exp}_${ens}_19000101-20051231_r180x100.nc
-        ;;
+                cdo -remapbil,r180x100 -selyear,1900/2005 \
+                    ${var}_day_${model}_${exp}_${ens}_18500101-20121231.nc \
+                    ${var}_day_${model}_${exp}_${ens}_19000101-20051231_r180x100.nc
 
-    historicalNat )
-        dir=histNat
+                ;;
 
-        cd ${dir}
-        echo "Started processing ${exp} in ${dir} directory."
+            historicalMisc )
+                dir=histMisc
+                ens=r1i1p3
 
-        cdo -remapbil,r180x100 -selyear,1900/2005 \
-            tas_day_${model}_${exp}_${ens}_18500101-20121231.nc \
-            tas_day_${model}_${exp}_${ens}_19000101-20051231_r180x100.nc
+                cd $THIS_FILE_DIR/${dir}
+                echo "Started processing ${exp} in ${dir} directory."
 
-        cdo -remapbil,r180x100 -selyear,1900/2005 \
-            tasmin_day_${model}_${exp}_${ens}_18500101-20121231.nc \
-            tasmin_day_${model}_${exp}_${ens}_19000101-20051231_r180x100.nc
+                cdo -remapbil,r180x100 -selyear,1900/2005 \
+                    ${var}_day_${model}_${exp}_${ens}_18500101-20051231.nc \
+                    ${var}_day_${model}_${exp}_${ens}_19000101-20051231_r180x100.nc
 
-        cdo -remapbil,r180x100 -selyear,1900/2005 \
-            tasmax_day_${model}_${exp}_${ens}_18500101-20121231.nc \
-            tasmax_day_${model}_${exp}_${ens}_19000101-20051231_r180x100.nc
-        ;;
+                ;;
 
-    historicalMisc )
-        dir=histMisc
-        ens=r1i1p3
+            historicalGHG )
+                dir=histGHG
+                cd $THIS_FILE_DIR/${dir}
+                echo "Started processing ${exp} in ${dir} directory."
 
-        cd ${dir}
-        echo "Started processing ${exp} in ${dir} directory."
+                cdo -mergetime \
+                    ${var}_day_${model}_${exp}_${ens}_18500101-18991231.nc  \
+                    ${var}_day_${model}_${exp}_${ens}_19000101-19491231.nc \
+                    ${var}_day_${model}_${exp}_${ens}_19500101-19991231.nc \
+                    ${var}_day_${model}_${exp}_${ens}_20000101-20121231.nc \
+                    ${var}_day_${model}_${exp}_${ens}_18500101-20121231.nc
 
-        cdo -remapbil,r180x100 -selyear,1900/2005 \
-            tas_day_${model}_${exp}_${ens}_18500101-20051231.nc \
-            tas_day_${model}_${exp}_${ens}_19000101-20051231_r180x100.nc
+                cdo -remapbil,r180x100 -selyear,1900/2005 \
+                    ${var}_day_${model}_${exp}_${ens}_18500101-20121231.nc \
+                    ${var}_day_${model}_${exp}_${ens}_19000101-20051231_r180x100.nc
 
-        cdo -remapbil,r180x100 -selyear,1900/2005 \
-            tasmin_day_${model}_${exp}_${ens}_18500101-20051231.nc \
-            tasmin_day_${model}_${exp}_${ens}_19000101-20051231_r180x100.nc
-
-        cdo -remapbil,r180x100 -selyear,1900/2005 \
-            tasmax_day_${model}_${exp}_${ens}_18500101-20051231.nc \
-            tasmax_day_${model}_${exp}_${ens}_19000101-20051231_r180x100.nc
-        ;;
-
-    historicalGHG )
-        dir=histGHG
-        cd ${dir}
-        echo "Started processing ${exp} in ${dir} directory."
-        cdo -mergetime \
-            tas_day_${model}_${exp}_${ens}_18500101-18991231.nc  \
-            tas_day_${model}_${exp}_${ens}_19000101-19491231.nc \
-            tas_day_${model}_${exp}_${ens}_19500101-19991231.nc \
-            tas_day_${model}_${exp}_${ens}_20000101-20121231.nc \
-            tas_day_${model}_${exp}_${ens}_18500101-20121231.nc
-
-        cdo -remapbil,r180x100 -selyear,1900/2005 \
-            tas_day_${model}_${exp}_${ens}_18500101-20121231.nc \
-            tas_day_${model}_${exp}_${ens}_19000101-20051231_r180x100.nc
-
-        rm tas_day_${model}_${exp}_${ens}_18500101-20121231.nc
-
-
-        cdo -mergetime \
-            tasmin_day_${model}_${exp}_${ens}_18500101-18991231.nc  \
-            tasmin_day_${model}_${exp}_${ens}_19000101-19491231.nc \
-            tasmin_day_${model}_${exp}_${ens}_19500101-19991231.nc \
-            tasmin_day_${model}_${exp}_${ens}_20000101-20121231.nc \
-            tasmin_day_${model}_${exp}_${ens}_18500101-20121231.nc
-
-        cdo -remapbil,r180x100 -selyear,1900/2005 \
-            tasmin_day_${model}_${exp}_${ens}_18500101-20121231.nc \
-            tasmin_day_${model}_${exp}_${ens}_19000101-20051231_r180x100.nc
-
-        rm tasmin_day_${model}_${exp}_${ens}_18500101-20121231.nc
-
-
-        cdo -mergetime \
-            tasmax_day_${model}_${exp}_${ens}_18500101-18991231.nc  \
-            tasmax_day_${model}_${exp}_${ens}_19000101-19491231.nc \
-            tasmax_day_${model}_${exp}_${ens}_19500101-19991231.nc \
-            tasmax_day_${model}_${exp}_${ens}_20000101-20121231.nc \
-            tasmax_day_${model}_${exp}_${ens}_18500101-20121231.nc
-
-        cdo -remapbil,r180x100 -selyear,1900/2005 \
-            tasmax_day_${model}_${exp}_${ens}_18500101-20121231.nc \
-            tasmax_day_${model}_${exp}_${ens}_19000101-20051231_r180x100.nc
-
-        rm tasmax_day_${model}_${exp}_${ens}_18500101-20121231.nc
-
-        exit
-        ;;
-esac
+                rm ${var}_day_${model}_${exp}_${ens}_18500101-20121231.nc
+                ;;
+        esac
+    done
+done
