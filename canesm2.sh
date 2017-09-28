@@ -24,12 +24,12 @@ for exp in ${exmts[@]}; do
         historicalNat )
             dir=histNat
             ;;
+        historicalGHG )
+            dir=histGHG
+            ;;
         historicalMisc )
             dir=histMisc
             ens=r1i1p4
-            ;;
-        historicalGHG )
-            dir=histGHG
             ;;
     esac
 
