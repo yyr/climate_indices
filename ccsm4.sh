@@ -6,7 +6,7 @@ source $THIS_FILE_DIR/fun.bash
 
 # exp=${1:-historical}
 # exmts=(historical)
-exmts=(historical historicalNat historicalMisc historicalGHG)
+exmts=(historical historicalNat historicalGHG historicalMisc)
 
 vars=(pr)
 # vars=(pr tas tasmax tasmin)
