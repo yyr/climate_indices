@@ -44,7 +44,7 @@ for exp in ${exmts[@]}; do
 
     echo "Started processing ${exp} in ${dir} directory."
 
-    for i in "${vars[@]}"
+    for var in "${vars[@]}"
     do
         cdo -remapbil,r180x100 -selyear,1900/2005 \
             ${var}_day_${model}_${exp}_${ens}_18500101-20121231.nc \
