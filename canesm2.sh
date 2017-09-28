@@ -2,8 +2,8 @@
 # Created: Thursday, July 13 2017
 
 # exp=${1:-historical}
-exmts=(historical)
-# exmts=(historical historicalNat historicalMisc historicalGHG)
+# exmts=(historical)
+exmts=(historical historicalNat historicalMisc historicalGHG)
 
 vars=(pr)
 # vars=(pr tas tasmax tasmin)
@@ -12,6 +12,8 @@ model=CanESM2
 ens=r1i1p1
 
 for exp in ${exmts[@]}; do
+    echo exp=$exp
+
     case ${exp} in
         historical )
             dir=hist
@@ -29,6 +31,7 @@ for exp in ${exmts[@]}; do
     esac
 
     cd ${dir}
+    echo "Started processing ${exp} in ${dir} directory."
 
     case ${exp} in
         historical )                # This is different times for historical exp.
@@ -38,11 +41,8 @@ for exp in ${exmts[@]}; do
                     ${var}_day_${model}_${exp}_${ens}_18500101-20051231.nc \
                     ${var}_day_${model}_${exp}_${ens}_19000101-20051231_r180x100.nc
             done
-            exit
             ;;
     esac
-
-    echo "Started processing ${exp} in ${dir} directory."
 
     for var in "${vars[@]}"
     do
