@@ -18,48 +18,24 @@ do
         # calculate day 10th percentile
         y10pctl ${var} ${exp} ${model}
 
-        exit
-        # set +x
-        echo "Individual year eca started"
-
-        # Calculate indcices for each year.
-        for i in $(seq 1900 2005);
-        do
-            cdo -eca_tn10p -selyear,$i ${var}_day_${model}_${exp}_r*_19000101-20051231_r180x100.nc \
-                ${var}_${model}_${exp}_ydpctl10p.nc ${model}_${exp}_CN_$i.nc
-        done
-        # set -x
-
-        # merge time of indices and convert to days.
-        cdo mergetime ${model}_${exp}_CN_????.nc ${model}_${exp}_CN_1900-2005.nc
-        cdo -mulc,3.65 ${model}_${exp}_CN_1900-2005.nc ${model}_${exp}_CND_1900-2005.nc
-
-        if [ $? != 0 ]; then
-            exit
-        fi
+        # Calculate cold_nights indices merge time of indices
+        ind_cn ${var} ${exp} ${model}
     done
 
-    cdo ensmean \
-        NorESM1-M_${exp}_CN_1900-2005.nc \
-        IPSL-CM5A-LR_${exp}_CN_1900-2005.nc \
-        CCSM4_${exp}_CN_1900-2005.nc \
-        CanESM2_${exp}_CN_1900-2005.nc \
-        GFDL-CM3_${exp}_CN_1900-2005.nc \
-        ${exp}_CN_1900_2005_ensmean.nc
-    # GFDL-ESM2M_${exp}_CN_1900-2005.nc
-
-    cdo ensmean \
-        NorESM1-M_${exp}_CND_1900-2005.nc \
-        IPSL-CM5A-LR_${exp}_CND_1900-2005.nc \
-        CCSM4_${exp}_CND_1900-2005.nc \
-        CanESM2_${exp}_CND_1900-2005.nc \
-        GFDL-CM3_${exp}_CND_1900-2005.nc \
-        ${exp}_CND_1900_2005_ensmean.nc
-    # GFDL-ESM2M_${exp}_CND_1900-2005.nc \
+    ensmean CN ${exp} ${models[@]}
+    ensmean CND ${exp} ${models[@]}
 
     # Calculate trend.
-    cdo -trend -selyear,1951/2005 ${exp}_CN_1900_2005_ensmean.nc ${exp}_CN_1951-2005_mean.nc  ${exp}_CN_1951-2005_trend.nc
-    cdo -trend -selyear,1951/2005 ${exp}_CND_1900_2005_ensmean.nc ${exp}_CND_1951-2005_mean.nc  ${exp}_CND_1951-2005_trend.nc
+    cdo -trend \
+        -selyear,1951/2005 \
+        ${exp}_CN_1900_2005_ensmean.nc \
+        ${exp}_CN_1951-2005_mean.nc \
+        ${exp}_CN_1951-2005_trend.nc
+
+    cdo -trend -selyear,1951/2005 \
+        ${exp}_CND_1900_2005_ensmean.nc \
+        ${exp}_CND_1951-2005_mean.nc \
+        ${exp}_CND_1951-2005_trend.nc
 done
 
 #
