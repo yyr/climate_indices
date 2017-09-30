@@ -92,7 +92,7 @@ function ind_wd()
 
     # Calculate indcices for each year.
     for i in $(seq 1900 2005); do
-        cdo -eca_tn90p \
+        cdo -eca_tg90p \
             -selyear,$i \
             ${var}_day_${model}_${exp}_r*_19000101-20051231_r180x100.nc \
             ${var}_${model}_${exp}_ydpctl90p.nc \
@@ -107,6 +107,31 @@ function ind_wd()
     cdo -mulc,3.65 \
         ${model}_${exp}_WD_1900-2005.nc \
         ${model}_${exp}_WDD_1900-2005.nc
+}
+
+function ind_wn()
+{
+    var=$1
+    exp=$2
+    model=$3
+
+    # Calculate indcices for each year.
+    for i in $(seq 1900 2005); do
+        cdo -eca_tn90p \
+            -selyear,$i \
+            ${var}_day_${model}_${exp}_r*_19000101-20051231_r180x100.nc \
+            ${var}_${model}_${exp}_ydpctl90p.nc \
+            ${model}_${exp}_WN_$i.nc
+    done
+
+    # merge time of indices and convert to days.
+    cdo -O mergetime \
+        ${model}_${exp}_WN_????.nc \
+        ${model}_${exp}_WN_1900-2005.nc
+
+    cdo -mulc,3.65 \
+        ${model}_${exp}_WN_1900-2005.nc \
+        ${model}_${exp}_WND_1900-2005.nc
 }
 
 function ind_fd()
