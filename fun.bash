@@ -75,7 +75,7 @@ function ind_cn()
     done
 
     # merge time of indices and convert to days.
-    cdo mergetime \
+    cdo -O mergetime \
         ${model}_${exp}_CN_????.nc \
         ${model}_${exp}_CN_1900-2005.nc
 
@@ -100,7 +100,7 @@ function ind_wd()
     done
 
     # merge time of indices and convert to days.
-    cdo mergetime \
+    cdo -O mergetime \
         ${model}_${exp}_WD_????.nc \
         ${model}_${exp}_WD_1900-2005.nc
 
@@ -125,7 +125,7 @@ function ensmean()
         str="${str}  ${model}_${exp}_${ind}_1900-2005.nc "
     done
 
-    cdo ensmean \
+    cdo -O ensmean \
          ${str} \
          ${exp}_${ind}_1900_2005_ensmean.nc
 }
