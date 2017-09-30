@@ -109,6 +109,27 @@ function ind_cd()
         ${model}_${exp}_CDD_1900-2005.nc
 }
 
+function ind_csdi()
+{
+    var=$1
+    exp=$2
+    model=$3
+
+    # Calculate indcices for each year.
+    for i in $(seq 1900 2005); do
+        cdo -eca_cwfi \
+            -selyear,$i \
+            ${var}_day_${model}_${exp}_r*_19000101-20051231_r180x100.nc \
+            ${var}_${model}_${exp}_ydpctl10p.nc \
+            ${model}_${exp}_CSDI_$i.nc
+    done
+
+    # merge time of indices and convert to days.
+    cdo -O mergetime \
+        ${model}_${exp}_CSDI_????.nc \
+        ${model}_${exp}_CSDI_1900-2005.nc
+}
+
 function ind_wd()
 {
     var=$1
