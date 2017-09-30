@@ -109,6 +109,24 @@ function ind_wd()
         ${model}_${exp}_WDD_1900-2005.nc
 }
 
+function ind_fd()
+{
+    var=$1
+    exp=$2
+    model=$3
+
+    # Calculate indcices for each year.
+    for i in $(seq 1900 2005); do
+        cdo -eca_fd \
+            -selyear,$i \
+            ${var}_day_${model}_${exp}_r*_19000101-20051231_r180x100.nc \
+            ${model}_${exp}_FD_$i.nc
+    done
+    # merge time of indices and convert to days.
+    cdo -O mergetime \
+        ${model}_${exp}_FD_????.nc \
+        ${model}_${exp}_FD_1900-2005.nc
+}
 
 function ensmean()
 {
