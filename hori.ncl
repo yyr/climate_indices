@@ -72,6 +72,7 @@ begin
 
   end do
   pres = set_res_panel(True)
+  pres@gsnPanelMainString = "Warm Days"
   pres@lbLabelStride = 6
   panelize_2col(wks,plot,pres)
 end
