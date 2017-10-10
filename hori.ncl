@@ -13,11 +13,6 @@ begin
     d = d * 55
     printMinMax(d, 0)
 
-    ; seamask(d)
-
-    wks = gsn_open_wks("pdf", expmts(it) + "_wd_trend")
-    gsn_define_colormap(wks,"MPL_RdPu") ; select color map
-
     res = True ; options desired
     res@gsnLeftString = ""
     res@gsnRightString = ""
@@ -35,13 +30,9 @@ begin
     res@cnMaxLevelValF =  100.
     res@cnLevelSpacingF = 2.5
 
-    ; res@cnFillDrawOrder      = "Predraw"  ; draw contours first
-
     ;; lablebar
     res@lbOrientation = "vertical"
     res@lbLabelStride = 2
-
-    ;; res@lbLabelStrings =  (/0., 100., 200., 400., 800., 1600., 3200., 4000. /)
 
     res@gsnDraw                   = False                  ; don't draw
     res@gsnFrame                  = False                  ; don't advance frame
