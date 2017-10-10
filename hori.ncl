@@ -5,7 +5,7 @@ load "./cmip.ncl"
 begin
   expmts = (/"historical", "historicalGHG", "historicalNat", "historicalMisc"/)
 
-  do it = 0, 0, 1
+  do it = 0, 3, 1
     fin = "./trends/" + expmts(it) + "_WDD_1951-2005_trend.nc"
     f = addfile(fin, "r")
     d = f->warm_days_percent_wrt_90th_percentile_of_reference_period
@@ -16,8 +16,7 @@ begin
     ; seamask(d)
 
     wks = gsn_open_wks("pdf", expmts(it) + "_wd_trend")
-    gsn_define_colormap(wks,"BlueRed") ; select color map
-    ; gsn_reverse_colormap(wks)
+    gsn_define_colormap(wks,"MPL_RdPu") ; select color map
 
     res = True ; options desired
     res@gsnLeftString = ""
@@ -46,16 +45,29 @@ begin
 
     res@gsnDraw                   = False                  ; don't draw
     res@gsnFrame                  = False                  ; don't advance frame
+    res@cnFillDrawOrder = "Predraw"
+    res@cnLineDrawOrder = "Predraw"
 
     mpres  = res  ; Map resources
     mpres@mpDataBaseVersion           = "Ncarg4_1"
     res@mpOutlineMaskingOn = True
     mpres@mpFillOn  = True  ; Map resources
-    mpres@mpFillAreaSpecifiers  = (/"land"/)
-    mpres@mpMaskAreaSpecifiers  = (/"Water"/)
+    mpres@mpFillBoundarySets    = "NoBoundaries"
 
     mpres@mpGeophysicalLineThicknessF = 2.0
     mpres@mpGeophysicalLineColor = "Black"
+
+    mpres@mpFillBoundarySets    = "NoBoundaries"
+    fill_specs = (/"water","land"/)
+    mask_specs = (/ "land" /)
+
+
+    mpres@mpFillAreaSpecifiers  = fill_specs
+    mpres@mpSpecifiedFillColors = (/"white","blue"/)
+
+    mpres@mpAreaMaskingOn       = 1
+    mpres@mpMaskAreaSpecifiers  = mask_specs
+
     plot = gsn_csm_contour_map(wks,d(0,:,:),mpres)
 
     draw(plot)
