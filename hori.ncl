@@ -12,7 +12,9 @@ begin
   do it = 0, 3, 1
     fin = "./trends/" + expmts(it) + "_WDD_1951-2005_trend.nc"
     f = addfile(fin, "r")
-    d = f->warm_days_percent_wrt_90th_percentile_of_reference_period
+
+    varname = getfilevarnames(f)
+    d = f->$varname(3)$
 
     d = d * 55
     printMinMax(d, 0)
@@ -72,7 +74,7 @@ begin
 
   end do
   pres = set_res_panel(True)
-  pres@gsnPanelMainString = "Warm Days"
+  pres@txString           = varname(3)
   pres@lbLabelStride = 6
   panelize_2col(wks,plot,pres)
 end
