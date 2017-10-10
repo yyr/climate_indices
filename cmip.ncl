@@ -1,6 +1,7 @@
 ; Copyright (C) Yagnesh Raghava Yakkala. http://yagnesh.org
 ; Created: Saturday, September 30 2017
 load "~/git/ncl_junk/ncl-lib/resources.ncl"
+load "~/git/ncl_junk/ncl-lib/plot.ncl"
 
 ;_____________________________________________________________________________
 ; Function: load_landmask

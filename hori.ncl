@@ -5,6 +5,10 @@ load "./cmip.ncl"
 begin
   expmts = (/"historical", "historicalGHG", "historicalNat", "historicalMisc"/)
 
+  plot = new(4,graphic)
+  wks = gsn_open_wks("pdf", "wd_trend")
+  gsn_define_colormap(wks,"MPL_RdPu") ; select color map
+
   do it = 0, 3, 1
     fin = "./trends/" + expmts(it) + "_WDD_1951-2005_trend.nc"
     f = addfile(fin, "r")
@@ -16,7 +20,7 @@ begin
     res = True ; options desired
     res@gsnLeftString = ""
     res@gsnRightString = ""
-    res@tiMainString = "Trend"
+    res@tiMainString = expmts(it)
 
     res@cnFillOn = True
     res@gsnSpreadColors=True
@@ -38,6 +42,12 @@ begin
     res@gsnFrame                  = False                  ; don't advance frame
     res@cnFillDrawOrder = "Predraw"
     res@cnLineDrawOrder = "Predraw"
+    res = set_res_no_margin(res)
+    res = set_res_lb(res)
+    res = set_res_tm_size(res)
+    res@lbLabelBarOn = False
+    res@gsnLeftString = ""
+    res@gsnRightString = ""
 
     mpres  = res  ; Map resources
     mpres@mpDataBaseVersion           = "Ncarg4_1"
@@ -52,16 +62,16 @@ begin
     fill_specs = (/"water","land"/)
     mask_specs = (/ "land" /)
 
-
     mpres@mpFillAreaSpecifiers  = fill_specs
-    mpres@mpSpecifiedFillColors = (/"white","blue"/)
+    mpres@mpSpecifiedFillColors = (/"lightskyblue","white"/)
 
     mpres@mpAreaMaskingOn       = 1
     mpres@mpMaskAreaSpecifiers  = mask_specs
 
-    plot = gsn_csm_contour_map(wks,d(0,:,:),mpres)
+    plot(it) = gsn_csm_contour_map(wks,d(0,:,:),mpres)
 
-    draw(plot)
-    frame(wks)
   end do
+  pres = set_res_panel(True)
+  pres@lbLabelStride = 6
+  panelize_2col(wks,plot,pres)
 end
