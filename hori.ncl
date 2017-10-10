@@ -3,48 +3,62 @@
 load "./cmip.ncl"
 
 begin
-  fin = "./trends/historical_WDD_1951-2005_trend.nc"
-  f = addfile(fin, "r")
-  d = f->warm_days_percent_wrt_90th_percentile_of_reference_period
+  expmts = (/"historical", "historicalGHG", "historicalNat", "historicalMisc"/)
 
-  d = d * 55
-  printMinMax(d, 0)
+  do it = 0, 0, 1
+    fin = "./trends/" + expmts(it) + "_WDD_1951-2005_trend.nc"
+    f = addfile(fin, "r")
+    d = f->warm_days_percent_wrt_90th_percentile_of_reference_period
 
-  ; seamask(d)
+    d = d * 55
+    printMinMax(d, 0)
 
-  wks = gsn_open_wks("pdf","wd")
-  gsn_define_colormap(wks,"BlueRed") ; select color map
-  ; gsn_reverse_colormap(wks)
+    ; seamask(d)
 
-  res = True ; options desired
-  res@gsnLeftString = ""
-  res@gsnRightString = ""
-  res@tiMainString = "Trend"
+    wks = gsn_open_wks("pdf", expmts(it) + "_wd_trend")
+    gsn_define_colormap(wks,"BlueRed") ; select color map
+    ; gsn_reverse_colormap(wks)
 
-  res@cnFillOn = True
-  res@gsnSpreadColors=True
-  res@cnLinesOn = False
-  res@cnLineLabelsOn = False
+    res = True ; options desired
+    res@gsnLeftString = ""
+    res@gsnRightString = ""
+    res@tiMainString = "Trend"
 
-  res = set_res_cn(res)
+    res@cnFillOn = True
+    res@gsnSpreadColors=True
+    res@cnLinesOn = False
+    res@cnLineLabelsOn = False
 
-  res@cnLevelSelectionMode = "ManualLevels"
-  res@cnMinLevelValF = 0.
-  res@cnMaxLevelValF =  100.
-  res@cnLevelSpacingF = 2.5
+    res = set_res_cn(res)
 
-  ; res@cnFillDrawOrder      = "Predraw"  ; draw contours first
+    res@cnLevelSelectionMode = "ManualLevels"
+    res@cnMinLevelValF = 0.
+    res@cnMaxLevelValF =  100.
+    res@cnLevelSpacingF = 2.5
 
-  ;; lablebar
-  res@lbOrientation = "vertical"
-  res@lbLabelStride = 2
+    ; res@cnFillDrawOrder      = "Predraw"  ; draw contours first
 
-  ;; res@lbLabelStrings =  (/0., 100., 200., 400., 800., 1600., 3200., 4000. /)
+    ;; lablebar
+    res@lbOrientation = "vertical"
+    res@lbLabelStride = 2
 
-  mpres  = res  ; Map resources
-  mpres@mpFillAreaSpecifiers  = (/"land"/)
-  mpres@mpMaskAreaSpecifiers  = (/"Oceans"/)
-  mpres@mpGeophysicalLineThicknessF = 2.0
-  mpres@mpGeophysicalLineColor = "Black"
-  plot = gsn_csm_contour_map(wks,d(0,:,:),mpres)
+    ;; res@lbLabelStrings =  (/0., 100., 200., 400., 800., 1600., 3200., 4000. /)
+
+    res@gsnDraw                   = False                  ; don't draw
+    res@gsnFrame                  = False                  ; don't advance frame
+
+    mpres  = res  ; Map resources
+    mpres@mpDataBaseVersion           = "Ncarg4_1"
+    res@mpOutlineMaskingOn = True
+    mpres@mpFillOn  = True  ; Map resources
+    mpres@mpFillAreaSpecifiers  = (/"land"/)
+    mpres@mpMaskAreaSpecifiers  = (/"Water"/)
+
+    mpres@mpGeophysicalLineThicknessF = 2.0
+    mpres@mpGeophysicalLineColor = "Black"
+    plot = gsn_csm_contour_map(wks,d(0,:,:),mpres)
+
+    draw(plot)
+    frame(wks)
+  end do
 end
