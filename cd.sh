@@ -5,9 +5,10 @@ set -x
 THIS_FILE_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 source $THIS_FILE_DIR/fun.bash
 
-var=tasmin
+var=tas
 models=(NorESM1-M IPSL-CM5A-LR CCSM4 CanESM2 GFDL-CM3) # GFDL-ESM2M
 exmts=(historical historicalNat historicalGHG historicalMisc)
+# exmts=(historical )
 
 for exp in ${exmts[@]};
 do
