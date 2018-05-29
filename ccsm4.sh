@@ -7,9 +7,7 @@ source $THIS_FILE_DIR/fun.bash
 # exp=${1:-historical}
 # exmts=(historical)
 exmts=(historical historicalNat historicalGHG historicalMisc)
-
-vars=(pr)
-# vars=(pr tas tasmax tasmin)
+vars=(pr tas tasmax tasmin)
 
 model=CCSM4
 ens=r1i1p1
@@ -42,7 +40,8 @@ for exp in ${exmts[@]}; do
             ${var}_day_${model}_${exp}_${ens}_19900101-20051231.nc \
             ${var}_day_${model}_${exp}_${ens}_18850101-20051231.nc
 
-        cdo -remapbil,r180x100 -selyear,1900/2005 ${var}_day_${model}_${exp}_${ens}_18850101-20051231.nc \
+        cdo -remapbil,r180x100 -selyear,1900/2005 \
+            ${var}_day_${model}_${exp}_${ens}_18850101-20051231.nc \
             ${var}_day_${model}_${exp}_${ens}_19000101-20051231_r180x100.nc
 
         rm ${var}_day_${model}_${exp}_${ens}_18850101-20051231.nc

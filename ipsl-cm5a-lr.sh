@@ -5,11 +5,8 @@ THIS_FILE_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 source $THIS_FILE_DIR/fun.bash
 
 # exp=${1:-historical}
-# exmts=(historical)
 exmts=(historical historicalNat historicalGHG historicalMisc)
-
-vars=(pr)
-# vars=(pr tas tasmax tasmin)
+vars=(pr tas tasmax tasmin)
 
 model=IPSL-CM5A-LR
 ens=r1i1p1
