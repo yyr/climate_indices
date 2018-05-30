@@ -1,6 +1,7 @@
 #!/bin/bash
 # Created: Thursday, July 27 2017
-set -x
+# set -x
+
 THIS_FILE_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 source $THIS_FILE_DIR/fun.bash
 var=tas
@@ -18,11 +19,11 @@ do
         # calculate day 90th percentile
         y90pctl ${var} ${exp} ${model}
 
-        # Calculate cold_nights indices merge time of indices
+        # Calculate warm days indices merge time of indices
         ind_wd ${var} ${exp} ${model}
     done
 
-    # TODO: calculate ensemble mean
+    # calculate ensemble mean
     ensmean WD ${exp} ${models[@]}
     ensmean WDD ${exp} ${models[@]}
 
@@ -32,6 +33,7 @@ do
         ${exp}_WD_1900_2005_ensmean.nc \
         ${exp}_WD_1951-2005_mean.nc \
         ${exp}_WD_1951-2005_trend.nc
+
     cdo -trend \
         -selyear,1951/2005 \
         ${exp}_WDD_1900_2005_ensmean.nc \
