@@ -6,7 +6,7 @@ THIS_FILE_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 source $THIS_FILE_DIR/fun.bash
 
 var=tasmin
-models=(NorESM1-M IPSL-CM5A-LR CCSM4 CanESM2 GFDL-CM3) # GFDL-ESM2M
+models=(NorESM1-M IPSL-CM5A-LR CCSM4 CanESM2 GFDL-CM3 GFDL-ESM2M)
 exmts=(historical historicalNat historicalGHG historicalMisc)
 
 for exp in ${exmts[@]};
