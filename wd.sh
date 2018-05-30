@@ -1,14 +1,18 @@
 #!/bin/bash
 # Created: Thursday, July 27 2017
-# set -x
 
+# Warm Days (WD)
+# Warm days percent w.r.t. 90th percentile of reference period
+# daily mean temperature should be used
+#
+
+# set -x
 THIS_FILE_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 source $THIS_FILE_DIR/fun.bash
-var=tas
 
+var=tas
 models=(NorESM1-M IPSL-CM5A-LR CCSM4 CanESM2 GFDL-CM3 GFDL-ESM2M)
 exmts=(historical historicalNat historicalGHG historicalMisc)
-# exmts=(historical )
 
 for exp in ${exmts[@]};
 do

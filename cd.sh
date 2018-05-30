@@ -1,7 +1,12 @@
 #!/bin/bash
 # Created: Thursday, July 27 2017
 
-set -x
+# Cold Days (CD)
+# Cold days percent w.r.t. 10th percentile of reference period.
+# daily mean Temperature.
+#
+
+# set -x
 THIS_FILE_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 source $THIS_FILE_DIR/fun.bash
 

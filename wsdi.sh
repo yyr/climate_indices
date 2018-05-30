@@ -1,6 +1,13 @@
 #!/bin/bash
 # Created: Thursday, July 27 2017
-set -x
+
+#
+# Warm spell days index (WSDI)
+# Warm spell days index w.r.t. 90th percentile of reference period
+# a time series of the daily mean temperature
+#
+
+# set -x
 THIS_FILE_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 source $THIS_FILE_DIR/fun.bash
 
@@ -17,11 +24,10 @@ do
         # calculate day 90th percentile
         y90pctl ${var} ${exp} ${model}
 
-        # Calculate cold_nights indices merge time of indices
+        # Calculate Warm spell days index (WSDI) and  merge time
         ind_wsdi ${var} ${exp} ${model}
     done
 
-    # TODO: calculate ensemble mean
     ensmean WSDI ${exp} ${models[@]}
 
     # Calculate trend.

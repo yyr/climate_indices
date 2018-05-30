@@ -1,7 +1,13 @@
 #!/bin/bash
 # Created: Thursday, July 27 2017
 
-set -x
+#
+# Cold-spell days index (CSDI)
+# Cold-spell days index w.r.t. 10th percentile of reference period
+# Time series of the daily mean temperature TG
+#
+
+# set -x
 THIS_FILE_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 source $THIS_FILE_DIR/fun.bash
 

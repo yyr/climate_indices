@@ -1,6 +1,11 @@
 #!/bin/bash
 # Created: Thursday, July 27 2017
 
+# Cold Nights (CN)
+# Cold days percent w.r.t. 10th percentile of reference period
+# time serie of the daily minimum temperature
+#
+
 set -x
 THIS_FILE_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 source $THIS_FILE_DIR/fun.bash
