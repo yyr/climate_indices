@@ -23,7 +23,7 @@ do
         # calculate day 10th percentile
         y10pctl ${var} ${exp} ${model}
 
-        # Calculate cold_nights indices merge time of indices
+        # Calculate cold days index and merge time
         ind_cd ${var} ${exp} ${model}
     done
 

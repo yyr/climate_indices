@@ -23,7 +23,7 @@ do
         # calculate day 90th percentile
         y90pctl ${var} ${exp} ${model}
 
-        # Calculate warm days indices merge time of indices
+        # Calculate warm days index and merge time
         ind_wd ${var} ${exp} ${model}
     done
 

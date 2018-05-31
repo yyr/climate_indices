@@ -1,0 +1,14 @@
+| ind  | variable | percentile | full name                                           |
+|------+----------+------------+-----------------------------------------------------|
+| cd   | tas      | 10th       |                                                     |
+| wd   | tas      | 90th       |                                                     |
+| fd   | tasmin   | --         |                                                     |
+| cn   | tasmin   | 10th       |                                                     |
+| wn   | tasmin   | 90th       |                                                     |
+| tn   | tasmin   | --         |                                                     |
+| csdi | tasmin   | 10th       |                                                     |
+| wsdi | tas      | 90th       |                                                     |
+| ecdd | pr       | --         | consecutive dry days                                |
+| ecwd | pr       | --         | consecutive wet days                                |
+| vwd  | pr       | 95th       | very wet days (ECAR 95days)                         |
+| ptot | pr       | 95th       | ECAR90PTOT - Precipitation percent due to R90p days |

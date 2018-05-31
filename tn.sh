@@ -19,9 +19,10 @@ exmts=(historical historicalNat historicalGHG historicalMisc)
 for exp in ${exmts[@]};
 do
     cd ${THIS_FILE_DIR}/${exp}
+
     for model in "${models[@]}"
     do
-        # Calculate cold_nights indices merge time of indices
+        # Calculate tropical nights index for each year and merge them
         ind_tn ${var} ${exp} ${model}
     done
 

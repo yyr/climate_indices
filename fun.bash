@@ -119,6 +119,8 @@ function ind_cd()
     cdo -s -mulc,3.65 \
         ${model}_${exp}_CD_1900-2005.nc \
         ${model}_${exp}_CDD_1900-2005.nc
+
+    # rm ${model}_${exp}_CD_????.nc
 }
 
 function ind_csdi()
@@ -165,6 +167,8 @@ function ind_wd()
     cdo -s -mulc,3.65 \
         ${model}_${exp}_WD_1900-2005.nc \
         ${model}_${exp}_WDD_1900-2005.nc
+
+    # rm ${model}_${exp}_WD_????.nc
 }
 
 function ind_wsdi()

@@ -2,3 +2,4 @@ hist*/*
 *.nc
 wgetters/
 *.pdf
+original_data/

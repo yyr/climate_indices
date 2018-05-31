@@ -24,7 +24,7 @@ do
         # calculate day 90th percentile
         y90pctl ${var} ${exp} ${model}
 
-        # Calculate Warm spell days index (WSDI) and  merge time
+        # Calculate wsdi for each year and merge them
         ind_wsdi ${var} ${exp} ${model}
     done
 

@@ -18,11 +18,14 @@ exmts=(historical historicalNat historicalGHG historicalMisc)
 for exp in ${exmts[@]};
 do
     cd ${THIS_FILE_DIR}/${exp}
+
+    set +x
     for model in "${models[@]}"
     do
-        # Calculate Frost Days indices merge time of indices
+        # Calculate Frost Days index and merge time of indices
         ind_fd ${var} ${exp} ${model}
     done
+    set -x
 
     ensmean FD ${exp} ${models[@]}
 

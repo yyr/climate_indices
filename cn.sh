@@ -18,14 +18,16 @@ for exp in ${exmts[@]};
 do
     cd ${THIS_FILE_DIR}/${exp}
 
+    set +x
     for model in "${models[@]}"
     do
         # calculate day 10th percentile
         y10pctl ${var} ${exp} ${model}
 
-        # Calculate cold_nights indices merge time of indices
+        # Calculate cold nights index for each year and merge them
         ind_cn ${var} ${exp} ${model}
     done
+    set -x
 
     ensmean CN ${exp} ${models[@]}
     ensmean CND ${exp} ${models[@]}

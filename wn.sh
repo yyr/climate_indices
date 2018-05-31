@@ -18,17 +18,17 @@ exmts=(historical historicalNat historicalGHG historicalMisc)
 for exp in ${exmts[@]};
 do
     cd ${THIS_FILE_DIR}/${exp}
+
+    set +x
     for model in "${models[@]}"
     do
-
-        # calculate day 90th percentile
         y90pctl ${var} ${exp} ${model}
 
-        # Calculate cold_nights indices merge time of indices
+        # Calculate warm nights index for each year and merge them
         ind_wn ${var} ${exp} ${model}
     done
+    set -x
 
-    # TODO: calculate ensemble mean
     ensmean WN ${exp} ${models[@]}
     ensmean WND ${exp} ${models[@]}
 
