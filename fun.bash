@@ -259,8 +259,6 @@ function ensmean()
     exp=${1}
     shift
     models=("${@}")
-    echo $models
-
     str=" "
 
     for model in "${models[@]}"; do
