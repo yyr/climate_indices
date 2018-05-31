@@ -7,7 +7,7 @@
 # a time series of the daily mean temperature
 #
 
-# set -x
+set -x
 THIS_FILE_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 source $THIS_FILE_DIR/fun.bash
 

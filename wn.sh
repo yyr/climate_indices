@@ -7,7 +7,7 @@
 # a time series of the daily minimum temperature should be used.,
 #
 
-# set -x
+set -x
 THIS_FILE_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 source $THIS_FILE_DIR/fun.bash
 
