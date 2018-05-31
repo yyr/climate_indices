@@ -29,7 +29,8 @@ function y10pctl()
     var=$1
     exp=$2
     model=$3
-    cdo -ydaypctl,10 \
+
+    cdo -s -ydaypctl,10 \
         -selyear,1961/1990 \
         ${var}_day_${model}_${exp}_r*_19000101-20051231_r180x100.nc \
         -ydaymin -selyear,1961/1990 \
@@ -45,7 +46,7 @@ function y90pctl()
     var=$1
     exp=$2
     model=$3
-    cdo -ydaypctl,90 \
+    cdo -s -ydaypctl,90 \
         -selyear,1961/1990 \
         ${var}_day_${model}_${exp}_r*_19000101-20051231_r180x100.nc \
         -ydaymin -selyear,1961/1990 \
@@ -67,7 +68,7 @@ function ind_cn()
 
     # Calculate indcices for each year.
     for i in $(seq 1900 2005); do
-        cdo -eca_tn10p \
+        cdo -s -eca_tn10p \
             -selyear,$i \
             ${var}_day_${model}_${exp}_r*_19000101-20051231_r180x100.nc \
             ${var}_${model}_${exp}_ydpctl10p.nc \
@@ -75,11 +76,11 @@ function ind_cn()
     done
 
     # merge time of indices and convert to days.
-    cdo -O mergetime \
+    cdo -s -O mergetime \
         ${model}_${exp}_CN_????.nc \
         ${model}_${exp}_CN_1900-2005.nc
 
-    cdo -mulc,3.65 \
+    cdo -s -mulc,3.65 \
         ${model}_${exp}_CN_1900-2005.nc \
         ${model}_${exp}_CND_1900-2005.nc
 }
@@ -92,7 +93,7 @@ function ind_cd()
 
     # Calculate indcices for each year.
     for i in $(seq 1900 2005); do
-        cdo -eca_tg10p \
+        cdo -s -eca_tg10p \
             -selyear,$i \
             ${var}_day_${model}_${exp}_r*_19000101-20051231_r180x100.nc \
             ${var}_${model}_${exp}_ydpctl10p.nc \
@@ -100,11 +101,11 @@ function ind_cd()
     done
 
     # merge time of indices and convert to days.
-    cdo -O mergetime \
+    cdo -s -O mergetime \
         ${model}_${exp}_CD_????.nc \
         ${model}_${exp}_CD_1900-2005.nc
 
-    cdo -mulc,3.65 \
+    cdo -s -mulc,3.65 \
         ${model}_${exp}_CD_1900-2005.nc \
         ${model}_${exp}_CDD_1900-2005.nc
 }
@@ -117,7 +118,7 @@ function ind_csdi()
 
     # Calculate indcices for each year.
     for i in $(seq 1900 2005); do
-        cdo -eca_cwfi \
+        cdo -s -eca_cwfi \
             -selyear,$i \
             ${var}_day_${model}_${exp}_r*_19000101-20051231_r180x100.nc \
             ${var}_${model}_${exp}_ydpctl10p.nc \
@@ -125,7 +126,7 @@ function ind_csdi()
     done
 
     # merge time of indices and convert to days.
-    cdo -O mergetime \
+    cdo -s -O mergetime \
         ${model}_${exp}_CSDI_????.nc \
         ${model}_${exp}_CSDI_1900-2005.nc
 }
@@ -138,7 +139,7 @@ function ind_wd()
 
     # Calculate indcices for each year.
     for i in $(seq 1900 2005); do
-        cdo -eca_tg90p \
+        cdo -s -eca_tg90p \
             -selyear,$i \
             ${var}_day_${model}_${exp}_r*_19000101-20051231_r180x100.nc \
             ${var}_${model}_${exp}_ydpctl90p.nc \
@@ -146,11 +147,11 @@ function ind_wd()
     done
 
     # merge time of indices and convert to days.
-    cdo -O mergetime \
+    cdo -s -O mergetime \
         ${model}_${exp}_WD_????.nc \
         ${model}_${exp}_WD_1900-2005.nc
 
-    cdo -mulc,3.65 \
+    cdo -s -mulc,3.65 \
         ${model}_${exp}_WD_1900-2005.nc \
         ${model}_${exp}_WDD_1900-2005.nc
 }
@@ -163,7 +164,7 @@ function ind_wsdi()
 
     # Calculate indcices for each year.
     for i in $(seq 1900 2005); do
-        cdo -eca_hwfi \
+        cdo -s -eca_hwfi \
             -selyear,$i \
             ${var}_day_${model}_${exp}_r*_19000101-20051231_r180x100.nc \
             ${var}_${model}_${exp}_ydpctl90p.nc \
@@ -171,7 +172,7 @@ function ind_wsdi()
     done
 
     # merge time of indices and convert to days.
-    cdo -O mergetime \
+    cdo -s -O mergetime \
         ${model}_${exp}_WSDI_????.nc \
         ${model}_${exp}_WSDI_1900-2005.nc
 }
@@ -184,7 +185,7 @@ function ind_wn()
 
     # Calculate indcices for each year.
     for i in $(seq 1900 2005); do
-        cdo -eca_tn90p \
+        cdo -s -eca_tn90p \
             -selyear,$i \
             ${var}_day_${model}_${exp}_r*_19000101-20051231_r180x100.nc \
             ${var}_${model}_${exp}_ydpctl90p.nc \
@@ -192,11 +193,11 @@ function ind_wn()
     done
 
     # merge time of indices and convert to days.
-    cdo -O mergetime \
+    cdo -s -O mergetime \
         ${model}_${exp}_WN_????.nc \
         ${model}_${exp}_WN_1900-2005.nc
 
-    cdo -mulc,3.65 \
+    cdo -s -mulc,3.65 \
         ${model}_${exp}_WN_1900-2005.nc \
         ${model}_${exp}_WND_1900-2005.nc
 }
@@ -209,13 +210,13 @@ function ind_fd()
 
     # Calculate indcices for each year.
     for i in $(seq 1900 2005); do
-        cdo -eca_fd \
+        cdo -s -eca_fd \
             -selyear,$i \
             ${var}_day_${model}_${exp}_r*_19000101-20051231_r180x100.nc \
             ${model}_${exp}_FD_$i.nc
     done
     # merge time of indices and convert to days.
-    cdo -O mergetime \
+    cdo -s -O mergetime \
         ${model}_${exp}_FD_????.nc \
         ${model}_${exp}_FD_1900-2005.nc
 }
@@ -228,13 +229,13 @@ function ind_tn()
 
     # Calculate indcices for each year.
     for i in $(seq 1900 2005); do
-        cdo -eca_tr \
+        cdo -s -eca_tr \
             -selyear,$i \
             ${var}_day_${model}_${exp}_r*_19000101-20051231_r180x100.nc \
             ${model}_${exp}_TN_$i.nc
     done
     # merge time of indices and convert to days.
-    cdo -O mergetime \
+    cdo -s -O mergetime \
         ${model}_${exp}_TN_????.nc \
         ${model}_${exp}_TN_1900-2005.nc
 }
@@ -255,7 +256,7 @@ function ensmean()
         str="${str}  ${model}_${exp}_${ind}_1900-2005.nc "
     done
 
-    cdo -O ensmean \
-         ${str} \
-         ${exp}_${ind}_1900_2005_ensmean.nc
+    cdo -s -O ensmean \
+        ${str} \
+        ${exp}_${ind}_1900_2005_ensmean.nc
 }
