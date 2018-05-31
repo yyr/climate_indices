@@ -30,14 +30,21 @@ function y10pctl()
     exp=$2
     model=$3
 
-    cdo -s -ydaypctl,10 \
-        -selyear,1961/1990 \
-        ${var}_day_${model}_${exp}_r*_19000101-20051231_r180x100.nc \
-        -ydaymin -selyear,1961/1990 \
-        ${var}_day_${model}_${exp}_r*_19000101-20051231_r180x100.nc \
-        -ydaymax -selyear,1961/1990 \
-        ${var}_day_${model}_${exp}_r*_19000101-20051231_r180x100.nc \
-        ${var}_${model}_${exp}_ydpctl10p.nc
+    CREATED_FILE=${var}_${model}_${exp}_ydpctl10p.nc
+    if [ -f $CREATED_FILE ] ; then
+        red_echo 10th percentile $CREATED_FILE already exists. SKIPPING
+        return
+    else
+        cdo -s -ydaypctl,10 \
+            -selyear,1961/1990 \
+            ${var}_day_${model}_${exp}_r*_19000101-20051231_r180x100.nc \
+            -ydaymin -selyear,1961/1990 \
+            ${var}_day_${model}_${exp}_r*_19000101-20051231_r180x100.nc \
+            -ydaymax -selyear,1961/1990 \
+            ${var}_day_${model}_${exp}_r*_19000101-20051231_r180x100.nc \
+            ${var}_${model}_${exp}_ydpctl10p.nc
+    fi
+
 }
 
 function y90pctl()
@@ -46,19 +53,23 @@ function y90pctl()
     var=$1
     exp=$2
     model=$3
-    cdo -s -ydaypctl,90 \
-        -selyear,1961/1990 \
-        ${var}_day_${model}_${exp}_r*_19000101-20051231_r180x100.nc \
-        -ydaymin -selyear,1961/1990 \
-        ${var}_day_${model}_${exp}_r*_19000101-20051231_r180x100.nc \
-        -ydaymax -selyear,1961/1990 \
-        ${var}_day_${model}_${exp}_r*_19000101-20051231_r180x100.nc \
-        ${var}_${model}_${exp}_ydpctl90p.nc
 
-    if [ $? != 0 ]; then
-        exit
+    CREATED_FILE=${var}_${model}_${exp}_ydpctl90p.nc
+    if [ -f $CREATED_FILE ] ; then
+        red_echo 90th percentile $CREATED_FILE already exists. SKIPPING
+        return
+    else
+        cdo -s -ydaypctl,90 \
+            -selyear,1961/1990 \
+            ${var}_day_${model}_${exp}_r*_19000101-20051231_r180x100.nc \
+            -ydaymin -selyear,1961/1990 \
+            ${var}_day_${model}_${exp}_r*_19000101-20051231_r180x100.nc \
+            -ydaymax -selyear,1961/1990 \
+            ${var}_day_${model}_${exp}_r*_19000101-20051231_r180x100.nc \
+            ${var}_${model}_${exp}_ydpctl90p.nc
     fi
 }
+
 
 function ind_cn()
 {
