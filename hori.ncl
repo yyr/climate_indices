@@ -7,10 +7,10 @@ begin
 
   plot = new(4,graphic)
   wks = gsn_open_wks("pdf", "wd_trend")
-  gsn_define_colormap(wks,"MPL_RdPu") ; select color map
+  gsn_define_colormap(wks,"NCV_blue_red") ; select color map
 
   do it = 0, 3, 1
-    fin = "./trends/" + expmts(it) + "_WDD_1951-2005_trend.nc"
+    fin = expmts(it) + "/" +expmts(it) + "_WDD_1951-2005_trend.nc"
     f = addfile(fin, "r")
 
     varname = getfilevarnames(f)
@@ -32,9 +32,9 @@ begin
     res = set_res_cn(res)
 
     res@cnLevelSelectionMode = "ManualLevels"
-    res@cnMinLevelValF = 0.
+    res@cnMinLevelValF = -100.
     res@cnMaxLevelValF =  100.
-    res@cnLevelSpacingF = 2.5
+    res@cnLevelSpacingF = 5
 
     ;; lablebar
     res@lbOrientation = "vertical"
