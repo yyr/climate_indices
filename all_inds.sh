@@ -8,3 +8,7 @@ time ./wn.sh
 time ./tn.sh
 time ./csdi.sh
 time ./wsdi.sh
+time ./ecdd.sh
+time ./ecwd.sh
+time ./vwd.sh
+time ./ptot.sh
