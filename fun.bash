@@ -273,3 +273,23 @@ function ensmean()
         ${str} \
         ${exp}_${ind}_1900_2005_ensmean.nc
 }
+
+
+function ind_ecdd()
+{
+    var=$1
+    exp=$2
+    model=$3
+
+    # Calculate indcices for each year.
+    for i in $(seq 1900 2005); do
+        cdo -s -eca_cdd \
+            -selyear,$i \
+            ${var}_day_${model}_${exp}_r*_19000101-20051231_r180x100.nc \
+            ${model}_${exp}_ECDD_$i.nc
+    done
+    cdo -s -O mergetime \
+        ${model}_${exp}_ECDD_????.nc \
+        ${model}_${exp}_ECDD_1900-2005.nc
+}
+
