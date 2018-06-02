@@ -70,6 +70,29 @@ function y90pctl()
     fi
 }
 
+function y95pctl()
+{
+    echo "PWD:" `pwd`
+    var=$1
+    exp=$2
+    model=$3
+
+    CREATED_FILE=${var}_${model}_${exp}_ydpctl95p.nc
+    if [ -f $CREATED_FILE ] ; then
+        red_echo 10th percentile $CREATED_FILE already exists. SKIPPING
+        return
+    else
+        cdo -s -ydaypctl,95 \
+            -selyear,1961/1990 \
+            ${var}_day_${model}_${exp}_r*_19000101-20051231_r180x100.nc \
+            -ydaymin -selyear,1961/1990 \
+            ${var}_day_${model}_${exp}_r*_19000101-20051231_r180x100.nc \
+            -ydaymax -selyear,1961/1990 \
+            ${var}_day_${model}_${exp}_r*_19000101-20051231_r180x100.nc \
+            ${var}_${model}_${exp}_ydpctl95p.nc
+    fi
+}
+
 
 function ind_cn()
 {
@@ -311,4 +334,26 @@ function ind_ecwd()
         ${model}_${exp}_ECWD_????.nc \
         ${model}_${exp}_ECWD_1900-2005.nc
 }
+
+function ind_vwd()
+{
+    var=$1
+    exp=$2
+    model=$3
+
+    # Calculate indcices for each year.
+    for i in $(seq 1900 2005); do
+        cdo -s -eca_r95p \
+            -selyear,$i \
+            ${var}_day_${model}_${exp}_r*_19000101-20051231_r180x100.nc \
+            ${var}_${model}_${exp}_ydpctl95p.nc \
+            ${model}_${exp}_VWD_$i.nc
+    done
+
+    # merge time of indices
+    cdo -s -O mergetime \
+        ${model}_${exp}_VWD_????.nc \
+        ${model}_${exp}_VWD_1900-2005.nc
+}
+
 
