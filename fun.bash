@@ -293,3 +293,22 @@ function ind_ecdd()
         ${model}_${exp}_ECDD_1900-2005.nc
 }
 
+
+function ind_ecwd()
+{
+    var=$1
+    exp=$2
+    model=$3
+
+    # Calculate indcices for each year.
+    for i in $(seq 1900 2005); do
+        cdo -s -eca_cwd \
+            -selyear,$i \
+            ${var}_day_${model}_${exp}_r*_19000101-20051231_r180x100.nc \
+            ${model}_${exp}_ECWD_$i.nc
+    done
+    cdo -s -O mergetime \
+        ${model}_${exp}_ECWD_????.nc \
+        ${model}_${exp}_ECWD_1900-2005.nc
+}
+
