@@ -109,7 +109,7 @@ function ind_cn()
             ${model}_${exp}_CN_$i.nc
     done
 
-    # merge time of indices and convert to days.
+    # merge time and convert to days.
     cdo -s -O mergetime \
         ${model}_${exp}_CN_????.nc \
         ${model}_${exp}_CN_1900-2005.nc
@@ -134,7 +134,7 @@ function ind_cd()
             ${model}_${exp}_CD_$i.nc
     done
 
-    # merge time of indices and convert to days.
+    # merge time and convert to days.
     cdo -s -O mergetime \
         ${model}_${exp}_CD_????.nc \
         ${model}_${exp}_CD_1900-2005.nc
@@ -161,7 +161,7 @@ function ind_csdi()
             ${model}_${exp}_CSDI_$i.nc
     done
 
-    # merge time of indices and convert to days.
+    # merge time of indices
     cdo -s -O mergetime \
         ${model}_${exp}_CSDI_????.nc \
         ${model}_${exp}_CSDI_1900-2005.nc
@@ -182,7 +182,7 @@ function ind_wd()
             ${model}_${exp}_WD_$i.nc
     done
 
-    # merge time of indices and convert to days.
+    # merge time and convert to days.
     cdo -s -O mergetime \
         ${model}_${exp}_WD_????.nc \
         ${model}_${exp}_WD_1900-2005.nc
@@ -209,7 +209,6 @@ function ind_wsdi()
             ${model}_${exp}_WSDI_$i.nc
     done
 
-    # merge time of indices and convert to days.
     cdo -s -O mergetime \
         ${model}_${exp}_WSDI_????.nc \
         ${model}_${exp}_WSDI_1900-2005.nc
@@ -230,7 +229,7 @@ function ind_wn()
             ${model}_${exp}_WN_$i.nc
     done
 
-    # merge time of indices and convert to days.
+    # merge time and convert to days.
     cdo -s -O mergetime \
         ${model}_${exp}_WN_????.nc \
         ${model}_${exp}_WN_1900-2005.nc
@@ -253,7 +252,7 @@ function ind_fd()
             ${var}_day_${model}_${exp}_r*_19000101-20051231_r180x100.nc \
             ${model}_${exp}_FD_$i.nc
     done
-    # merge time of indices and convert to days.
+
     cdo -s -O mergetime \
         ${model}_${exp}_FD_????.nc \
         ${model}_${exp}_FD_1900-2005.nc
@@ -272,7 +271,7 @@ function ind_tn()
             ${var}_day_${model}_${exp}_r*_19000101-20051231_r180x100.nc \
             ${model}_${exp}_TN_$i.nc
     done
-    # merge time of indices and convert to days.
+
     cdo -s -O mergetime \
         ${model}_${exp}_TN_????.nc \
         ${model}_${exp}_TN_1900-2005.nc
@@ -291,7 +290,6 @@ function ensmean()
     for model in "${models[@]}"; do
         str="${str}  ${model}_${exp}_${ind}_1900-2005.nc "
     done
-
     cdo -s -O ensmean \
         ${str} \
         ${exp}_${ind}_1900_2005_ensmean.nc
