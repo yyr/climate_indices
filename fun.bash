@@ -357,3 +357,23 @@ function ind_vwd()
 }
 
 
+function ind_ptot()
+{
+    var=$1
+    exp=$2
+    model=$3
+
+    # Calculate indcices for each year.
+    for i in $(seq 1900 2005); do
+        cdo -s -eca_r95ptot \
+            -selyear,$i \
+            ${var}_day_${model}_${exp}_r*_19000101-20051231_r180x100.nc \
+            ${var}_${model}_${exp}_ydpctl95p.nc \
+            ${model}_${exp}_PTOT_$i.nc
+    done
+
+    # merge time of indices
+    cdo -s -O mergetime \
+        ${model}_${exp}_PTOT_????.nc \
+        ${model}_${exp}_PTOT_1900-2005.nc
+}
