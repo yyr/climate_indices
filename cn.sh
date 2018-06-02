@@ -21,7 +21,6 @@ do
     set +x
     for model in "${models[@]}"
     do
-        # calculate day 10th percentile
         y10pctl ${var} ${exp} ${model}
 
         # Calculate cold nights index for each year and merge them
@@ -32,7 +31,6 @@ do
     ensmean CN ${exp} ${models[@]}
     ensmean CND ${exp} ${models[@]}
 
-    # Calculate trend.
     cdo -trend \
         -selyear,1951/2005 \
         ${exp}_CN_1900_2005_ensmean.nc \
