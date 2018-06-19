@@ -45,7 +45,6 @@ begin
     res@cnFillDrawOrder = "Predraw"
     res@cnLineDrawOrder = "Predraw"
     res = set_res_no_margin(res)
-    res = set_res_lb(res)
     res = set_res_tm_size(res)
     res@lbLabelBarOn = False
     res@gsnLeftString = ""
@@ -71,10 +70,15 @@ begin
     mpres@mpMaskAreaSpecifiers  = mask_specs
 
     plot(it) = gsn_csm_contour_map(wks,d(0,:,:),mpres)
-
   end do
+
   pres = set_res_panel(True)
   pres@txString           = varname(3)
-  pres@lbLabelStride = 6
+  pres = set_res_lb(pres)
+  pres@lbOrientation = "horizontal"
+  pres@lbLabelFontHeightF = 0.01		 ; set font height of Label Bar labels
+  ; pres@lbLabelStride = 6
+  ; pres@lbAutoManage = False
+  ; pres@gsnPanelDebug = True
   panelize_2col(wks,plot,pres)
 end
