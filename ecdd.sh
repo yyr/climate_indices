@@ -34,7 +34,7 @@ do
 
     ensmean ECDD ${exp} ${models[@]}
     cdo -trend \
-        -selvar,onsecutive_dry_days_index_per_time_period \
+        -selvar,consecutive_dry_days_index_per_time_period \
         -selyear,1951/2005 \
         ${exp}_ECDD_1900_2005_ensmean.nc \
         ${exp}_ECDD_1951-2005_mean.nc \
