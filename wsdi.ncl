@@ -5,12 +5,14 @@ load "./cmip.ncl"
 begin
   expmts = (/"historical", "historicalGHG", "historicalNat", "historicalMisc"/)
 
+  indice = "wsdi"
+  outname = indice + "_trend"
   plot = new(4,graphic)
-  wks = gsn_open_wks("pdf", "wd_trend")
+  wks = gsn_open_wks("pdf", outname)
   gsn_define_colormap(wks,"NCV_blue_red") ; select color map
 
   do it = 0, 3, 1
-    fin = expmts(it) + "/" +expmts(it) + "_WDD_1951-2005_trend.nc"
+    fin = expmts(it) + "/" +expmts(it) + "_" + str_upper(indice) + "_1951-2005_trend.nc"
     f = addfile(fin, "r")
 
     varname = getfilevarnames(f)
@@ -32,9 +34,9 @@ begin
     res = set_res_cn(res)
 
     res@cnLevelSelectionMode = "ManualLevels"
-    res@cnMinLevelValF = -100.
-    res@cnMaxLevelValF =  100.
-    res@cnLevelSpacingF = 5
+    res@cnMinLevelValF = -50.
+    res@cnMaxLevelValF =  50.
+    res@cnLevelSpacingF = 2
 
     ;; lablebar
     res@lbOrientation = "vertical"
@@ -73,7 +75,7 @@ begin
   end do
 
   pres = set_res_panel(True)
-  pres@txString           = varname(3)
+  pres@txString = "Warm spell days index (WSDI), 1951 to 2005"
   pres = set_res_lb(pres)
   pres@lbOrientation = "horizontal"
   pres@lbLabelFontHeightF = 0.01		 ; set font height of Label Bar labels
