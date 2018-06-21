@@ -17,23 +17,18 @@ begin
 
     varname = getfilevarnames(f)
     d = f->$varname(3)$
-
     d = d * 55
     printMinMax(d, 0)
 
     mpres = set_cmip_common_mp_res(True)
     mpres@tiMainString = expmts(it)
-
-    mpres@cnLevelSelectionMode = "ManualLevels"
-    mpres@cnMinLevelValF = -100.
-    mpres@cnMaxLevelValF =  100.
-    mpres@cnLevelSpacingF = 5
+    set_res_cn_limits(mpres, -100., 100, 5)
 
     plot(it) = gsn_csm_contour_map(wks,d(0,:,:),mpres)
   end do
 
   pres = set_res_panel(True)
-  pres@txString           = "Cold Days trend 1951 to 2005"
+  pres@txString           = "Cold Days trend, 1951 to 2005"
   pres = set_res_lb(pres)
   pres@lbOrientation = "horizontal"
   pres@lbLabelFontHeightF = 0.01         ; set font height of Label Bar labels
